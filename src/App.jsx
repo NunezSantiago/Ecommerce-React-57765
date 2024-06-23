@@ -5,19 +5,26 @@ import { ItemListContainer } from './components/ItemListContainer'
 import { NotFound } from './components/NotFound'
 import { Header } from './components/header/Header'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { CartProvider } from './context/CartContext'
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
 
-      <Routes>
-        <Route path='/' element={<ItemListContainer />} />
-        <Route path='/category/:brandId' element={<ItemListContainer />} />
-        <Route path='/item/:itemId' element={<ItemDetailContainer />} />
-        <Route path='/*' element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <CartProvider>
+          <BrowserRouter>
+            <Header />
+
+            <Routes>
+              <Route path='/' element={<ItemListContainer />} />
+              <Route path='/category/:brandId' element={<ItemListContainer />} />
+              <Route path='/item/:itemId' element={<ItemDetailContainer />} />
+              <Route path='/*' element={<NotFound />} />
+            </Routes>
+        </BrowserRouter>
+      </CartProvider>
+    </div>
+    
   )
 }
 

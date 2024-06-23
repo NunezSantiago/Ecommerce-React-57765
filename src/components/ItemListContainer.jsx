@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import { NotFound } from './NotFound.jsx'
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { db } from "../firebase/config.js"
+import { CartContext } from "../context/CartContext.jsx"
 
 
 
@@ -13,6 +14,8 @@ export const ItemListContainer = () => {
   const [products, setProducts] = useState([])
   const [title, setTitle] = useState("All products")
   let { brandId } = useParams()
+
+  const { addToCart } = useContext(CartContext)
 
   useEffect(() => {
 
@@ -56,7 +59,7 @@ export const ItemListContainer = () => {
                   <br />
                   <Link to={`/item/${product.id}`}>{`${product.brand.brand_name} ${product.product_name}`}</Link>
                   <p>{`U$S${product.price}`}</p>
-                  <button>Add to cart</button>
+                  <button onClick={() => {addToCart(product.id, 1)}}>Add to cart</button>
                 </div>
               )
             }) : <NotFound />
