@@ -43,12 +43,13 @@ export const ItemDetailContainer = () => {
         <img src={product.image_url} alt={`${product.brand.brand_name} ${product.product_name}`} />
         <p>{product.description}</p>
         <p>{`U$S${product.price}`}</p>
+        
         <br />
 
         <div>
-          <button onClick={handleSubstract}>-</button>
+          <button onClick={handleSubstract}>➖</button>
           <p>{quantity}</p>
-          <button onClick={handleSum}>+</button>
+          <button onClick={handleSum}>➕</button>
         </div>
 
         <br />

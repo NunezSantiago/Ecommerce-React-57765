@@ -38,8 +38,13 @@ export const CartProvider = ({children}) => {
 		console.log(cart)
 	}
 
+	const itemsInCart = () => {
+		let number = cart.reduce((count, prod) => count + prod.quantity, 0)
+		return number
+	}
+
 	return (
-		<CartContext.Provider value={{cart, addToCart}}>
+		<CartContext.Provider value={{cart, addToCart, itemsInCart}}>
 			{children}
 		</CartContext.Provider>
 	)
