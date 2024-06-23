@@ -8,9 +8,9 @@ export const NavBar = () => {
     <nav className="navBar">
       <ul className="navItems">
         <li className="navItem"><Link to="/" className="navLink">All products</Link></li>
-        <li className="navItem"><Link to="/category/9" className="navLink">Samsung</Link></li>
-        <li className="navItem"><Link to="/category/48" className="navLink">Apple</Link></li>
-        <li className="navItem"><Link to="/category/80" className="navLink">Xiaomi</Link></li>
+        <li className="navItem"><Link to="/category/samsung" className="navLink">Samsung</Link></li>
+        <li className="navItem"><Link to="/category/apple" className="navLink">Apple</Link></li>
+        <li className="navItem"><Link to="/category/xiaomi" className="navLink">Xiaomi</Link></li>
       </ul>
     </nav>
   )

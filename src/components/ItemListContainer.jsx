@@ -1,43 +1,47 @@
 /* eslint-disable no-unused-vars */
 
-import data from "../data/products.json"
-import brands from "../data/brands.json"
-import { useEffect } from "react"
-import { useState } from "react"
-import { useParams } from "react-router-dom"
-import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { useParams, Link } from "react-router-dom"
 import { NotFound } from './NotFound.jsx'
+import { collection, getDocs, query, where } from "firebase/firestore"
+import { db } from "../firebase/config.js"
 
-//import React from 'react'
 
 
 export const ItemListContainer = () => {
 
-  const [products, setProducts] = useState()
-  const [title, setTitle] = useState()
-  let { categoryId } = useParams()
-
-  const getProducts = () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(data)
-      }, 500)
-    })
-  }
+  const [products, setProducts] = useState([])
+  const [title, setTitle] = useState("All products")
+  let { brandId } = useParams()
 
   useEffect(() => {
-    getProducts()
-      .then(res => {
-        if(!categoryId){
-          setTitle("All products")
-          setProducts(res.data)
-        } else{
-          let category = brands.find(brand => brand.brand_id === categoryId)
-          setTitle(category ? category.brand_name : "Not found")
-          setProducts(res.data.filter(prod => prod.brand_id == categoryId))
-        }
+
+    const productsRef = collection(db, "products")
+    const q = brandId ? query(productsRef, where("brand.brand_id", "==", brandId)) : productsRef
+    
+    const brandsRef = collection(db, "brands")
+    let catQuery = brandId && query(brandsRef, where("brand_id", "==", brandId))
+
+    getDocs(q)
+    .then( (res) => {
+      setProducts(res.docs.map((doc) => {
+        return {...doc.data(), id: doc.id}
+      }))
+    })
+
+    if(catQuery){
+      getDocs(catQuery)
+      .then((res) => {
+        setTitle(res.docs[0].data().brand_name)
       })
-  }, [categoryId])
+    } else {
+      setTitle("All products")
+    }
+
+
+  }, [brandId])
+
+  console.log(products)
 
   return (
     <div className="itemsContainer">
@@ -48,10 +52,10 @@ export const ItemListContainer = () => {
         {products && products.length != 0 ? products.map( (product) => {
               return (
                 <div className="item" key={product.id}>
-                  <img src={product.image_url} alt={`${product.brand_name} ${product.phone_name}`} />
+                  <img src={product.image_url} alt={`${product.brand.brand_name} ${product.product_name}`} />
                   <br />
-                  <Link to={`/item/${product.id}`}>{`${product.brand_name} ${product.phone_name}`}</Link>
-                  <p>U$S1200</p>
+                  <Link to={`/item/${product.id}`}>{`${product.brand.brand_name} ${product.product_name}`}</Link>
+                  <p>{`U$S${product.price}`}</p>
                   <button>Add to cart</button>
                 </div>
               )

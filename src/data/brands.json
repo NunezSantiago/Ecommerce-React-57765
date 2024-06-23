@@ -1,14 +1,14 @@
 [
     {
     "brand_name": "Samsung",
-    "brand_id": "9"
+    "brand_id": "samsung"
     },
     {
         "brand_name": "Apple",
-        "brand_id": "48"
+        "brand_id": "apple"
     },
     {
         "brand_name": "Xiaomi",
-        "brand_id": "80"
+        "brand_id": "xiaomi"
     }
 ]
