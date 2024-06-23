@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createContext } from "react";
 
 export const CartContext = createContext()
+
+const localCart = JSON.parse(localStorage.getItem("cart")) || []
 
 export const CartProvider = ({children}) => {
 
@@ -17,7 +19,7 @@ export const CartProvider = ({children}) => {
 	]
 	*/
 
-	const [cart, setCart] = useState([])
+	const [cart, setCart] = useState(localCart)
 
 	// Receives the id of the item that is to be added
 	// and hoy many of this items should be added
@@ -34,14 +36,17 @@ export const CartProvider = ({children}) => {
 		}
 
 		setCart(newCart)
-
-		console.log(cart)
 	}
 
 	const itemsInCart = () => {
 		let number = cart.reduce((count, prod) => count + prod.quantity, 0)
 		return number
 	}
+
+	useEffect( () => {
+		console.log(cart)
+		localStorage.setItem("cart", JSON.stringify(cart))
+	}, [cart])
 
 	return (
 		<CartContext.Provider value={{cart, addToCart, itemsInCart}}>

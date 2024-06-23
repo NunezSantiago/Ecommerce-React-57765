@@ -7,6 +7,7 @@ import { Link } from "react-router-dom"
 export const CartWidget = () => {
 
   const { itemsInCart } = useContext(CartContext)
+  
 
   return (
     <div className="cart">
