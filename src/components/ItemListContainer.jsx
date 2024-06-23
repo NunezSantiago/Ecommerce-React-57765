@@ -15,7 +15,7 @@ export const ItemListContainer = () => {
   const [title, setTitle] = useState("All products")
   let { brandId } = useParams()
 
-  const { addToCart } = useContext(CartContext)
+  const { cart, addToCart } = useContext(CartContext)
 
   useEffect(() => {
 
@@ -59,7 +59,7 @@ export const ItemListContainer = () => {
                   <br />
                   <Link to={`/item/${product.id}`}>{`${product.brand.brand_name} ${product.product_name}`}</Link>
                   <p>{`U$S${product.price}`}</p>
-                  <button onClick={() => {addToCart(product.id, 1)}}>Add to cart</button>
+                  <button onClick={() => {addToCart(product, 1)}}>Add to cart</button>
                 </div>
               )
             }) : <NotFound />

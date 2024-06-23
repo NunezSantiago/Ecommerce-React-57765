@@ -12,7 +12,7 @@ export const ItemDetailContainer = () => {
   const [product, setProduct] = useState()
   const [quantity, setQuantity] = useState(1)
   let {itemId} = useParams()
-  const { addToCart } = useContext(CartContext)
+  const { cart, addToCart } = useContext(CartContext)
 
   //To be implemented: Stock validation
   // If quantity < stock, then sum, else do nothing
@@ -54,7 +54,7 @@ export const ItemDetailContainer = () => {
 
         <br />
 
-        <button onClick={() => {addToCart(product.id, quantity)}}>Add to cart</button>
+        <button onClick={() => {addToCart(product, quantity)}}>Add to cart</button>
 
       </div> : <NotFound />}
     </div>
