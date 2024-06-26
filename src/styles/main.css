@@ -60,3 +60,49 @@
 .item *{
     margin: 0.2rem;
 }
+
+.itemDetailContainer{
+    margin: 1rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.itemDetail{
+    width: 30%;
+}
+
+.itemDetail p {
+    padding: 0.5rem;
+}
+
+.itemCounter{
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+}
+
+.cartItemCounter{
+    margin: 0.3rem;
+}
+
+.cartItemCounter button{
+    margin: 0.1rem;
+}
+
+.cartContainer{
+    margin: 1rem;
+}
+
+.cartItem{
+    margin: 0.5rem;
+}
+
+.purchaseForm{
+    display: flex;
+    
+}
+
+.formItem{
+    margin: 5px;
+}

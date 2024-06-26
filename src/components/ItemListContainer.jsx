@@ -42,7 +42,7 @@ export const ItemListContainer = () => {
     }
 
 
-  }, [brandId])
+  }, [brandId, cart])
 
   console.log(products)
 

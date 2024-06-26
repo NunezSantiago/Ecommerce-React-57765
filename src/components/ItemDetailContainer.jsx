@@ -30,29 +30,25 @@ export const ItemDetailContainer = () => {
     const productRef = itemId && doc(db, "products", itemId)
     getDoc(productRef)
     .then ((res) => {
-      setProduct({...res.data(), id: res.id})
+      res.data() && setProduct({...res.data(), id: res.id})
     })
 
   }, [itemId])
 
   return (
-    <div>
+    <div className="itemDetailContainer">
       {product ? 
-      <div>
+      <div className="itemDetail">
         <h1>{`${product.brand.brand_name} ${product.product_name}`}</h1>
         <img src={product.image_url} alt={`${product.brand.brand_name} ${product.product_name}`} />
         <p>{product.description}</p>
         <p>{`U$S${product.price}`}</p>
-        
-        <br />
 
-        <div>
+        <div className="itemCounter">
           <button onClick={handleSubstract}>➖</button>
-          <p>{quantity}</p>
+          <p className="quantitySelector">{quantity}</p>
           <button onClick={handleSum}>➕</button>
         </div>
-
-        <br />
 
         <button onClick={() => {addToCart(product, quantity)}}>Add to cart</button>
 

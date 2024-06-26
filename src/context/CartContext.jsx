@@ -2,22 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { createContext } from "react";
+import Toastify from 'toastify-js'
+import "toastify-js/src/toastify.css"
 
 export const CartContext = createContext()
 
 const localCart = JSON.parse(localStorage.getItem("cart")) || []
 
 export const CartProvider = ({children}) => {
-
-	/*
-	Cart structure
-	[
-		{
-			item: itemID,
-			quantity: number
-		}
-	]
-	*/
 
 	const [cart, setCart] = useState(localCart)
 
@@ -30,7 +22,8 @@ export const CartProvider = ({children}) => {
 	// and hoy many of this items should be added
 	const addToCart = (item, quantity) => {
 
-		let newCart = cart	
+		let newCart = [...cart]  // Create a copy of the current cart
+
 		// Checks if the item is already in the cart
 		const inCart = newCart.find((prod) => prod.id == item.id)
 
@@ -42,14 +35,21 @@ export const CartProvider = ({children}) => {
 
 		setCart(newCart)
 
-		console.log(cart)
+		Toastify({
+			text: "Product added to cart",
+			duration: 2000,
+			style: {
+				background: "linear-gradient(to right, #00b09b, #96c93d)",
+			}
+			}).showToast();
 	}
 
 	const removeFromCart = (item, quantity) => {
-		let newCart = cart
-		const indexOfProduct = newCart.indexOf(item)
-		console.log(indexOfProduct)
-		console.log(item)
+
+		let newCart = [...cart]  // Create a copy of the current cart
+
+        const indexOfProduct = newCart.findIndex((prod) => prod.id === item.id)
+		
 		if(indexOfProduct != -1){
 			if(newCart[indexOfProduct].quantity > quantity){
 				newCart[indexOfProduct].quantity-=quantity
@@ -57,8 +57,16 @@ export const CartProvider = ({children}) => {
 				newCart.splice(indexOfProduct, 1)
 			}
 		}
-		console.log(newCart)
+
 		setCart(newCart)
+
+		Toastify({
+			text: "Product removed from cart",
+			duration: 2000,
+			style: {
+				background: "linear-gradient(to right, #ED213A, #93291E)",
+			}
+			}).showToast();
 	}
 
 	const itemsInCart = () => {
@@ -71,8 +79,12 @@ export const CartProvider = ({children}) => {
 		return fullPrice
 	}
 
+	const clearCart = () =>{
+		setCart([])
+	}
+
 	return (
-		<CartContext.Provider value={ {cart, addToCart, itemsInCart, cartValue, removeFromCart} }>
+		<CartContext.Provider value={ {cart, addToCart, itemsInCart, cartValue, removeFromCart, clearCart} }>
 			{children}
 		</CartContext.Provider>
 	)
