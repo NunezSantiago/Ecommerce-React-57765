@@ -44,8 +44,6 @@ export const ItemListContainer = () => {
 
   }, [brandId, cart])
 
-  console.log(products)
-
   return (
     <div className="itemsContainer">
 
@@ -62,7 +60,7 @@ export const ItemListContainer = () => {
                   <button onClick={() => {addToCart(product, 1)}}>Add to cart</button>
                 </div>
               )
-            }) : <NotFound />
+            }) : <h1>Loading...</h1>
         }
       </div>
     </div>  

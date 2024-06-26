@@ -14,8 +14,6 @@ export const ItemDetailContainer = () => {
   let {itemId} = useParams()
   const { cart, addToCart } = useContext(CartContext)
 
-  //To be implemented: Stock validation
-  // If quantity < stock, then sum, else do nothing
   const handleSum = () => {
     setQuantity(quantity + 1)
   }
